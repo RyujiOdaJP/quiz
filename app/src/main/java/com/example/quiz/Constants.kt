@@ -1,6 +1,8 @@
 package com.example.quiz
 
 object Constants {
+    // object make singleton
+    // singleton means Ensure a class only has one instance, and provide a global point of access to it
     fun getQuestions(): ArrayList<Question> {
         val questionsList = ArrayList<Question>()
 
