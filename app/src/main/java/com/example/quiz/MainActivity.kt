@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
             if (enterName.text.toString().isEmpty()) {
                 Toast.makeText(this, "please enter your name", Toast.LENGTH_SHORT).show()
             } else {
+                //  Intent オブジェクトに記述することによって、別のアプリでアクティビティを開始できます
                 val intent = Intent(this, QuizQustionActivity::class.java)
                 startActivity(intent)
                 finish()
