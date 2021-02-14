@@ -1,11 +1,16 @@
 package com.example.quiz
 
+import android.graphics.Color
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_quiz_question.*
 
-class QuizQuestionActivity : AppCompatActivity() {
+class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
 
     private var mCurrentPosition = 1
     private var mQuestionList: ArrayList<Question>? = null
@@ -20,6 +25,30 @@ class QuizQuestionActivity : AppCompatActivity() {
 
         setQuestion()
 
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id) {
+            R.id.tv_option_one -> {
+
+                selectedOptionView(tv_option_one, 1)
+            }
+
+            R.id.tv_option_two -> {
+
+                selectedOptionView(tv_option_two, 2)
+            }
+
+            R.id.tv_option_three -> {
+
+                selectedOptionView(tv_option_three, 3)
+            }
+
+            R.id.tv_option_four -> {
+
+                selectedOptionView(tv_option_four, 4)
+            }
+        }
     }
 
     private fun setQuestion() {
@@ -41,5 +70,41 @@ class QuizQuestionActivity : AppCompatActivity() {
         }
 
         btnSubmit.text = "SUBMIT"
+    }
+
+    /**
+     * A function to set the view of selected option view.
+     */
+    private fun selectedOptionView(tv: TextView, selectedOptionNum: Int) {
+
+        defaultOptionsView()
+
+        mSelectedOptionPosition = selectedOptionNum
+
+        tv.setTextColor(
+            Color.parseColor("#363A43")
+        )
+        tv.setTypeface(tv.typeface, Typeface.BOLD)
+        tv.background = ContextCompat.getDrawable(
+            this,
+            R.drawable.selected_option_border_bg
+        )
+    }
+
+    private fun defaultOptionsView() {
+        val options = ArrayList<TextView>()
+        options.add(0, tv_option_one)
+        options.add(1, tv_option_two)
+        options.add(2, tv_option_three)
+        options.add(3, tv_option_four)
+
+        for (option in options) {
+            option.setTextColor(Color.parseColor("#7A8089"))
+            option.typeface = Typeface.DEFAULT
+            option.background = ContextCompat.getDrawable(
+                this,
+                R.drawable.default_option_border_bg
+            )
+        }
     }
 }
