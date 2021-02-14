@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Quiz">
-        <activity android:name=".QuizQustionActivity"
+        <activity android:name=".QuizQuestionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MaterialComponents.Light"
             android:windowSoftInputMode="adjustResize"
