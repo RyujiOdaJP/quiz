@@ -17,6 +17,7 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
     private var mCurrentPosition = 1 //page number in a sense progress position
     private var mQuestionList: ArrayList<Question>? = null
     private var mSelectedOptionPosition: Int = 0
+    private var mCorrectAnswers = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +80,8 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
                     if (question != null) {
                         if (question.correctAnswer != mSelectedOptionPosition){
                             answerView(mSelectedOptionPosition, R.drawable.incorrect_option_border_bg)
+                        } else {
+                            mCorrectAnswers++
                         }
                         answerView(question.correctAnswer, R.drawable.correct_option_border_bg)
                     }
