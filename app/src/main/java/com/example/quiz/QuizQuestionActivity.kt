@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_quiz_question.*
 
+// implement View.OnClickListener to make textView like button
 class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
 
     private var mCurrentPosition = 1
@@ -25,9 +26,16 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
 
         setQuestion()
 
+        // enable click event on specific textView
+        tv_option_one.setOnClickListener(this)
+        tv_option_two.setOnClickListener(this)
+        tv_option_three.setOnClickListener(this)
+        tv_option_four.setOnClickListener(this)
     }
 
+    // define what happens on click
     override fun onClick(v: View?) {
+        // v.id specifies textView's ID
         when(v?.id) {
             R.id.tv_option_one -> {
 
