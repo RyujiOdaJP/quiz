@@ -1,5 +1,6 @@
 package com.example.quiz
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
@@ -18,12 +19,15 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
     private var mQuestionList: ArrayList<Question>? = null
     private var mSelectedOptionPosition: Int = 0
     private var mCorrectAnswers = 0
+    private var mUserName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_question)
 
-        mCurrentPosition = 1
+        //get info from intent
+
+        mUserName = intent.getStringExtra(Constants.USE_NAME)
         mQuestionList = Constants.getQuestions()
 
         setQuestion()
@@ -69,17 +73,23 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
                             setQuestion()
                         }
                         else -> {
-                            Toast.makeText(
-                                this, "COMPLETED!",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            val intent = Intent(this, ResultActivity::class.java)
+                            intent.putExtra(Constants.USE_NAME, mUserName)
+                            intent.putExtra(Constants.CORRECT_ANSWERS, mCorrectAnswers)
+                            intent.putExtra(Constants.TOTAL_QUESTIONS, mQuestionList?.size)
+                            startActivity(intent)
+                            finish()
                         }
                     }
                 } else {
                     val question = mQuestionList?.get(mCurrentPosition - 1)
+
                     if (question != null) {
-                        if (question.correctAnswer != mSelectedOptionPosition){
-                            answerView(mSelectedOptionPosition, R.drawable.incorrect_option_border_bg)
+                        if (question.correctAnswer != mSelectedOptionPosition) {
+                            answerView(
+                                mSelectedOptionPosition,
+                                R.drawable.incorrect_option_border_bg
+                            )
                         } else {
                             mCorrectAnswers++
                         }
@@ -88,8 +98,9 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
                     if (mCurrentPosition == mQuestionList?.size ?: 0) {
                         btnSubmit.text = "Finish"
                     } else {
-                        btnSubmit.text ="GO TO NEXT"
+                        btnSubmit.text = "GO TO NEXT"
                     }
+                    mSelectedOptionPosition = 0
                 }
             }
         }
@@ -97,7 +108,6 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setQuestion() {
 
-        mCurrentPosition = 1
         val question = mQuestionList?.get(mCurrentPosition - 1)
 
         defaultOptionsView()
@@ -109,7 +119,7 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         progressBar.progress = mCurrentPosition
-        tvProgress.text = "${mCurrentPosition}" + "/" + "${progressBar.max}"
+        tvProgress.text = "$mCurrentPosition" + "/" + "${progressBar.max}"
 
         tvQuestion.text = question?.question
 
@@ -120,8 +130,6 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
             tv_option_three.text = question.optionThree
             tv_option_four.text = question.optionFour
         }
-
-        btnSubmit.text = "SUBMIT"
     }
 
     /**

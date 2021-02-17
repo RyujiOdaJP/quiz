@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 //  Intent オブジェクトに記述することによって、別のアプリでアクティビティを開始できます
                 val intent = Intent(this, QuizQuestionActivity::class.java)
+                intent.putExtra(Constants.USE_NAME, enterName.text.toString())
                 startActivity(intent)
                 finish()
             }
